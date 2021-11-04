@@ -1,5 +1,20 @@
-<?php require 'inc/data/products.php'; ?>
-<?php require 'inc/head.php'; ?>
+<?php require 'inc/data/products.php';
+    require 'inc/head.php';
+    if (!isset($_SESSION['shopping'])) {
+        $_SESSION['shopping'] = [];
+    }
+    if (isset($_GET['add_to_cart'])){
+        $productId = $_GET['add_to_cart'];
+        if (empty($_SESSION['shopping'][$productId])){
+            $_SESSION['shopping'][$productId] = 1;
+        } else {
+            $productAmount = $_SESSION['shopping'][$productId];
+            $productAmount += 1;
+            $_SESSION['shopping'][$productId] = $productAmount;
+        }
+    }
+    ?>
+
 <section class="cookies container-fluid">
     <div class="row">
         <?php foreach ($catalog as $id => $cookie) { ?>
